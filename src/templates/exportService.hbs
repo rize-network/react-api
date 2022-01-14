@@ -12,7 +12,6 @@ import { request as __request, useRequest,UseRequestOption } from '../core/reque
 import { OpenAPI } from '../core/OpenAPI';
 {{/if}}
 
-export class {{{name}}}{{{@root.postfix}}} {
 
     {{#each operations}}
     /**
@@ -37,7 +36,7 @@ export class {{{name}}}{{{@root.postfix}}} {
     {{/each}}
      * @throws ApiError
      */
-    public static {{{name}}}({{>parameters}}): CancelablePromise<{{>result}}> {
+  export const {{{name}}} = ({{>parameters}}): CancelablePromise<{{>result}}> => {
         return __request({
             method: '{{{method}}}',
             path: `{{{path}}}`,
@@ -94,27 +93,19 @@ export class {{{name}}}{{{@root.postfix}}} {
     }
 
     {{/each}}
-}
+
 
 {{#each operations}}
  
- {{{name}}}{{{@root.postfix}}}.{{{hookName}}}{{{@root.postfix}}} = (options:UseRequestOption={}): {
-    run: (...args: {{>parameters}}) => void;
+export const {{{hookName}}}{{{@root.postfix}}} = (options:UseRequestOption) : {
+    run: ( {{>parameters}}) => void;
     data: {{>result}};
     loading: boolean;
     error?: Error;
     params?: any;
-    } {
+    }=> {
     
-    const controller = useRequest({{{name}}}{{{@root.postfix}}}.{{{name}}},options));
-
-    return {
-        data,
-        run,
-        loading,
-        error,
-        params,
-    };
+    return useRequest({{{name}}},options);
 }
 
 {{/each}}

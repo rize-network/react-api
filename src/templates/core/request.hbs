@@ -11,13 +11,13 @@ export type UseRequestOption = {
 };
 
 export function useRequest(
-  service: {name: string; apply: (...args: any) => Promise<any>},
+  service: any,
   options = {},
 ): {
-  run: (...args: any) => void;
+  run: any;
   data: any;
   loading: boolean;
-  error?: Error | null;
+  error?: Error;
   params?: any;
 } {
   const [data, setData] = useState(undefined);
