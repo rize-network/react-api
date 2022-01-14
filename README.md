@@ -26,7 +26,7 @@
 ## Install
 
 ```
-npm install openapi-typescript-codegen --save-dev
+npm install react-swagger-openapi --save-dev
 ```
 
 ## Usage
@@ -72,13 +72,13 @@ $ openapi --help
 **NPX**
 
 ```
-npx openapi-typescript-codegen --input ./spec.json --output ./dist
+npx react-swagger-openapi --input ./spec.json --output ./dist
 ```
 
 **Node.js API**
 
 ```javascript
-const OpenAPI = require('openapi-typescript-codegen');
+const OpenAPI = require('react-swagger-openapi');
 
 OpenAPI.generate({
     input: './spec.json',
@@ -133,6 +133,37 @@ createUser({
     password: '123456',
     address: 'NY US',
 });
+```
+
+### Usage
+
+```typescript
+import { UserService } from './api';
+
+//promise
+const userRole = await UserService.getRole(1);
+
+const Component = () => {
+    //hooks
+    const userGetRoleRequest = UserService.useGetRole({
+        onSuccess:(data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.error(error)
+        }
+    });
+
+    return  (<>
+        <Button onPress={()=>{
+            userGetRoleRequest.run(1);
+        }}>Load</Button>
+
+        {userGetRoleRequest.loading && <Loader />}
+        {userGetRoleRequest.error && <>{userGetRoleRequest.error.message}</>}
+        {userGetRoleRequest.data && <>Name : {userGetRoleRequest.data.name}</>}
+    <>);
+}
 ```
 
 ### Enums vs. Union Types `--useUnionTypes`
@@ -489,17 +520,17 @@ npm install node-fetch@2.x --save-dev
 In order to compile the project and resolve the imports, you will need to enable the `allowSyntheticDefaultImports`
 in your `tsconfig.json` file.
 
-[npm-url]: https://npmjs.org/package/openapi-typescript-codegen
-[npm-image]: https://img.shields.io/npm/v/openapi-typescript-codegen.svg
+[npm-url]: https://npmjs.org/package/react-swagger-openapi
+[npm-image]: https://img.shields.io/npm/v/react-swagger-openapi.svg
 [license-url]: LICENSE
-[license-image]: http://img.shields.io/npm/l/openapi-typescript-codegen.svg
-[coverage-url]: https://codecov.io/gh/ferdikoomen/openapi-typescript-codegen
-[coverage-image]: https://img.shields.io/codecov/c/github/ferdikoomen/openapi-typescript-codegen.svg
-[quality-url]: https://lgtm.com/projects/g/ferdikoomen/openapi-typescript-codegen
-[quality-image]: https://img.shields.io/lgtm/grade/javascript/g/ferdikoomen/openapi-typescript-codegen.svg
-[climate-url]: https://codeclimate.com/github/ferdikoomen/openapi-typescript-codegen
-[climate-image]: https://img.shields.io/codeclimate/maintainability/ferdikoomen/openapi-typescript-codegen.svg
-[downloads-url]: http://npm-stat.com/charts.html?package=openapi-typescript-codegen
-[downloads-image]: http://img.shields.io/npm/dm/openapi-typescript-codegen.svg
-[build-url]: https://circleci.com/gh/ferdikoomen/openapi-typescript-codegen/tree/master
-[build-image]: https://circleci.com/gh/ferdikoomen/openapi-typescript-codegen/tree/master.svg?style=svg
+[license-image]: http://img.shields.io/npm/l/react-swagger-openapi.svg
+[coverage-url]: https://codecov.io/gh/rize-network/react-swagger-openapi
+[coverage-image]: https://img.shields.io/codecov/c/github/rize-network/react-swagger-openapi.svg
+[quality-url]: https://lgtm.com/projects/g/rize-network/react-swagger-openapi
+[quality-image]: https://img.shields.io/lgtm/grade/javascript/g/rize-network/react-swagger-openapi.svg
+[climate-url]: https://codeclimate.com/github/rize-network/react-swagger-openapi
+[climate-image]: https://img.shields.io/codeclimate/maintainability/rize-network/react-swagger-openapi.svg
+[downloads-url]: http://npm-stat.com/charts.html?package=react-swagger-openapi
+[downloads-image]: http://img.shields.io/npm/dm/react-swagger-openapi.svg
+[build-url]: https://circleci.com/gh/rize-network/react-swagger-openapi/tree/master
+[build-image]: https://circleci.com/gh/rize-network/react-swagger-openapi/tree/master.svg?style=svg
