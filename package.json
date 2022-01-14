@@ -1,15 +1,15 @@
 {
-    "name": "react-swagger-openapi",
+    "name": "@app-studio/react-api",
     "version": "0.14.1",
     "description": "Library that generates React Hooks based on the OpenAPI specification.",
     "author": "Steed Monteiro",
-    "homepage": "https://github.com/rize-network/react-swagger-openapi",
+    "homepage": "https://github.com/rize-network/react-api",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/rize-network/react-swagger-openapi.git"
+        "url": "git+https://github.com/rize-network/react-api.git"
     },
     "bugs": {
-        "url": "https://github.com/rize-network/react-swagger-openapi/issues"
+        "url": "https://github.com/rize-network/react-api/issues"
     },
     "license": "MIT",
     "keywords": [
@@ -35,7 +35,7 @@
     "main": "dist/index.js",
     "types": "types/index.d.ts",
     "bin": {
-        "react-swagger-openapi": "bin/index.js"
+        "react-api": "bin/index.js"
     },
     "files": [
         "bin/index.js",
