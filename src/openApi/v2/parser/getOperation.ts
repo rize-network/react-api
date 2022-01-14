@@ -30,6 +30,7 @@ export function getOperation(
     const operation: Operation = {
         service: serviceName,
         name: operationName,
+        hookName: `use${operationName[0].toUpperCase()}${operationName.slice(1)}`,
         summary: getComment(op.summary),
         description: getComment(op.description),
         deprecated: op.deprecated === true,
