@@ -1,4 +1,4 @@
-# OpenAPI Typescript Codegen
+# React Swagger OpenAPI
 
 [![NPM][npm-image]][npm-url]
 [![License][license-image]][license-url]
@@ -11,23 +11,23 @@
 > Node.js library that generates Typescript clients based on the OpenAPI specification.
 
 ## Why?
-- Frontend ❤️ OpenAPI, but we do not want to use JAVA codegen in our builds
-- Quick, lightweight, robust and framework-agnostic 🚀
-- Supports generation of TypeScript clients
-- Supports generations of Fetch, [Node-Fetch](#node-fetch-support), [Axios](#axios-support) and XHR http clients
-- Supports OpenAPI specification v2.0 and v3.0
-- Supports JSON and YAML files for input
-- Supports generation through CLI, Node.js and NPX
-- Supports tsc and @babel/plugin-transform-typescript
-- Supports aborting of requests (cancelable promise pattern)
-- Supports external references using [`json-schema-ref-parser`](https://github.com/APIDevTools/json-schema-ref-parser/)
+
+-   Frontend ❤️ OpenAPI, but we do not want to use JAVA codegen in our builds
+-   Quick, lightweight, robust and framework-agnostic 🚀
+-   Supports generation of TypeScript clients
+-   Supports generations of Fetch, [Node-Fetch](#node-fetch-support), [Axios](#axios-support) and XHR http clients
+-   Supports OpenAPI specification v2.0 and v3.0
+-   Supports JSON and YAML files for input
+-   Supports generation through CLI, Node.js and NPX
+-   Supports tsc and @babel/plugin-transform-typescript
+-   Supports aborting of requests (cancelable promise pattern)
+-   Supports external references using [`json-schema-ref-parser`](https://github.com/APIDevTools/json-schema-ref-parser/)
 
 ## Install
 
 ```
 npm install openapi-typescript-codegen --save-dev
 ```
-
 
 ## Usage
 
@@ -57,10 +57,10 @@ $ openapi --help
     $ openapi --input ./spec.json --output ./dist --client xhr
 ```
 
-
 ## Example
 
 **package.json**
+
 ```json
 {
     "scripts": {
@@ -82,24 +82,25 @@ const OpenAPI = require('openapi-typescript-codegen');
 
 OpenAPI.generate({
     input: './spec.json',
-    output: './dist'
+    output: './dist',
 });
 
 // Or by providing the content of the spec directly 🚀
 OpenAPI.generate({
     input: require('./spec.json'),
-    output: './dist'
+    output: './dist',
 });
 ```
-
 
 ## Features
 
 ### Argument style vs. Object style `--useOptions`
+
 There's no [named parameter](https://en.wikipedia.org/wiki/Named_parameter) in JavaScript or TypeScript, because of
 that, we offer the flag `--useOptions` to generate code in two different styles.
 
 **Argument-style:**
+
 ```typescript
 function createUser(name: string, password: string, type?: string, address?: string) {
     // ...
@@ -110,12 +111,18 @@ createUser('Jack', '123456', undefined, 'NY US');
 ```
 
 **Object-style:**
+
 ```typescript
-function createUser({ name, password, type, address }: {
-    name: string,
-    password: string,
-    type?: string
-    address?: string
+function createUser({
+    name,
+    password,
+    type,
+    address,
+}: {
+    name: string;
+    password: string;
+    type?: string;
+    address?: string;
 }) {
     // ...
 }
@@ -124,11 +131,12 @@ function createUser({ name, password, type, address }: {
 createUser({
     name: 'Jack',
     password: '123456',
-    address: 'NY US'
+    address: 'NY US',
 });
 ```
 
 ### Enums vs. Union Types `--useUnionTypes`
+
 The OpenAPI spec allows you to define [enums](https://swagger.io/docs/specification/data-models/enums/) inside the
 data model. By default, we convert these enums definitions to [TypeScript enums](https://www.typescriptlang.org/docs/handbook/enums.html).
 However, these enums are merged inside the namespace of the model, this is unsupported by Babel, [see docs](https://babeljs.io/docs/en/babel-plugin-transform-typescript#impartial-namespace-support).
@@ -137,6 +145,7 @@ we offer the flag `--useUnionTypes` to generate [union types](https://www.typesc
 instead of the traditional enums. The difference can be seen below:
 
 **Enums:**
+
 ```typescript
 // Model
 export interface Order {
@@ -157,11 +166,12 @@ export namespace Order {
 const order: Order = {
     id: 1,
     quantity: 40,
-    status: Order.status.PLACED
-}
+    status: Order.status.PLACED,
+};
 ```
 
 **Union Types:**
+
 ```typescript
 // Model
 export interface Order {
@@ -174,11 +184,12 @@ export interface Order {
 const order: Order = {
     id: 1,
     quantity: 40,
-    status: 'placed'
-}
+    status: 'placed',
+};
 ```
 
 ### Runtime schemas `--exportSchemas`
+
 By default, the OpenAPI generator only exports interfaces for your models. These interfaces will help you during
 development, but will not be available in JavaScript during runtime. However, Swagger allows you to define properties
 that can be useful during runtime, for instance: `maxLength` of a string or a `pattern` to match, etc. Let's say
@@ -187,10 +198,7 @@ we have the following model:
 ```json
 {
     "MyModel": {
-        "required": [
-            "key",
-            "name"
-        ],
+        "required": ["key", "name"],
         "type": "object",
         "properties": {
             "key": {
@@ -280,33 +288,21 @@ const formFields = Object.entries($MyModel.properties).map(([key, value]) => (
     />
 ));
 
-const MyForm = () => (
-    <form>
-        {formFields}
-    </form>
-);
-
+const MyForm = () => <form>{formFields}</form>;
 ```
 
-
 ### Enum with custom names and descriptions
+
 You can use `x-enum-varnames` and `x-enum-descriptions` in your spec to generate enum with custom names and descriptions.
 It's not in official [spec](https://github.com/OAI/OpenAPI-Specification/issues/681) yet. But it's a supported extension
 that can help developers use more meaningful enumerators.
+
 ```json
 {
     "EnumWithStrings": {
         "description": "This is a simple enum with strings",
-        "enum": [
-            0,
-            1,
-            2
-        ],
-        "x-enum-varnames": [
-            "Success",
-            "Warning",
-            "Error"
-        ],
+        "enum": [0, 1, 2],
+        "x-enum-varnames": ["Success", "Warning", "Error"],
         "x-enum-descriptions": [
             "Used when the status of something is successful",
             "Used when the status of something has a warning",
@@ -317,25 +313,26 @@ that can help developers use more meaningful enumerators.
 ```
 
 Generated code:
+
 ```typescript
 enum EnumWithStrings {
     /*
-    * Used when the status of something is successful
-    */
+     * Used when the status of something is successful
+     */
     Success = 0,
     /*
-    * Used when the status of something has a warning
-    */
+     * Used when the status of something has a warning
+     */
     Waring = 1,
     /*
-    * Used when the status of something has an error
-    */
+     * Used when the status of something has an error
+     */
     Error = 2,
 }
 ```
 
-
 ### Nullable in OpenAPI v2
+
 In the OpenAPI v3 spec you can create properties that can be NULL, by providing a `nullable: true` in your schema.
 However, the v2 spec does not allow you to do this. You can use the unofficial `x-nullable` in your specification
 to generate nullable properties in OpenApi v2.
@@ -363,15 +360,16 @@ to generate nullable properties in OpenApi v2.
 ```
 
 Generated code:
+
 ```typescript
 interface ModelWithNullableString {
-    prop?: string | null,
-    requiredProp: string | null,
+    prop?: string | null;
+    requiredProp: string | null;
 }
 ```
 
-
 ### Authorization
+
 The OpenAPI generator supports Bearer Token authorization. In order to enable the sending
 of tokens in each request you can set the token using the global OpenAPI configuration:
 
@@ -390,7 +388,7 @@ import { OpenAPI } from './generated';
 const getToken = async () => {
     // Some code that requests a token...
     return 'SOME_TOKEN';
-}
+};
 
 OpenAPI.TOKEN = getToken;
 ```
@@ -405,13 +403,14 @@ down your openapi.yml into multiple sub-files, or incorporate third-party schema
 as part of your types to ensure everything is able to be TypeScript generated.
 
 External references may be:
-* *relative references* - references to other files at the same location e.g.
-  `{ $ref: 'schemas/customer.yml' }`
-* *remote references* - fully qualified references to another remote location
-   e.g. `{ $ref: 'https://myexampledomain.com/schemas/customer_schema.yml' }`
 
-   For remote references, both files (when the file is on the current filesystem)
-   and http(s) URLs are supported.
+-   _relative references_ - references to other files at the same location e.g.
+    `{ $ref: 'schemas/customer.yml' }`
+-   _remote references_ - fully qualified references to another remote location
+    e.g. `{ $ref: 'https://myexampledomain.com/schemas/customer_schema.yml' }`
+
+    For remote references, both files (when the file is on the current filesystem)
+    and http(s) URLs are supported.
 
 External references may also contain internal paths in the external schema (e.g.
 `schemas/collection.yml#/definitions/schemas/Customer`) and back-references to
@@ -422,11 +421,10 @@ At start-up, an OpenAPI or Swagger file with external references will be "bundle
 so that all external references and back-references will be resolved (but local
 references preserved).
 
-
-FAQ
-===
+# FAQ
 
 ### Babel support
+
 If you use enums inside your models / definitions then those enums are by default inside a namespace with the same name
 as your model. This is called declaration merging. However, the [@babel/plugin-transform-typescript](https://babeljs.io/docs/en/babel-plugin-transform-typescript)
 does not support these namespaces, so if you are using babel in your project please use the `--useUnionTypes` flag
@@ -438,14 +436,18 @@ ignore any 'type only' imports, see https://babeljs.io/docs/en/babel-preset-type
 ```javascript
 module.exports = {
     presets: [
-        ['@babel/preset-typescript', {
-            onlyRemoveTypeImports: true,
-        }],
+        [
+            '@babel/preset-typescript',
+            {
+                onlyRemoveTypeImports: true,
+            },
+        ],
     ],
 };
 ```
 
 ### Axios support
+
 This tool allows you to generate a client based on the [`axios`](https://www.npmjs.com/package/axios) client.
 The advantage of the Axios client is that it works in both NodeJS and Browser based environments.
 If you want to generate the Axios based client then you can specify `--client axios` in the openapi call:
@@ -463,8 +465,8 @@ npm install form-data@4.x --save-dev
 In order to compile the project and resolve the imports, you will need to enable the `allowSyntheticDefaultImports`
 in your `tsconfig.json` file.
 
-
 ### Node-Fetch support
+
 By default, this tool will generate a client that is compatible with the (browser based) Fetch API.
 However, this client will not work inside the Node.js environment. If you want to generate the Node.js compatible
 client then you can specify `--client node` in the openapi call:
@@ -486,7 +488,6 @@ npm install node-fetch@2.x --save-dev
 
 In order to compile the project and resolve the imports, you will need to enable the `allowSyntheticDefaultImports`
 in your `tsconfig.json` file.
-
 
 [npm-url]: https://npmjs.org/package/openapi-typescript-codegen
 [npm-image]: https://img.shields.io/npm/v/openapi-typescript-codegen.svg
