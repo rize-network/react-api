@@ -26,7 +26,7 @@
 ## Install
 
 ```
-npm install react-swagger-openapi --save-dev
+npm install react-api --save-dev
 ```
 
 ## Usage
@@ -72,13 +72,13 @@ $ openapi --help
 **NPX**
 
 ```
-npx react-swagger-openapi --input ./spec.json --output ./dist
+npx react-api --input ./spec.json --output ./dist
 ```
 
 **Node.js API**
 
 ```javascript
-const OpenAPI = require('react-swagger-openapi');
+const OpenAPI = require('react-api');
 
 OpenAPI.generate({
     input: './spec.json',
@@ -520,17 +520,11 @@ npm install node-fetch@2.x --save-dev
 In order to compile the project and resolve the imports, you will need to enable the `allowSyntheticDefaultImports`
 in your `tsconfig.json` file.
 
-[npm-url]: https://npmjs.org/package/react-swagger-openapi
-[npm-image]: https://img.shields.io/npm/v/react-swagger-openapi.svg
+[npm-url]: https://npmjs.org/package/react-api
+[npm-image]: https://img.shields.io/npm/v/react-api.svg
 [license-url]: LICENSE
-[license-image]: http://img.shields.io/npm/l/react-swagger-openapi.svg
-[coverage-url]: https://codecov.io/gh/rize-network/react-swagger-openapi
-[coverage-image]: https://img.shields.io/codecov/c/github/rize-network/react-swagger-openapi.svg
-[quality-url]: https://lgtm.com/projects/g/rize-network/react-swagger-openapi
-[quality-image]: https://img.shields.io/lgtm/grade/javascript/g/rize-network/react-swagger-openapi.svg
-[climate-url]: https://codeclimate.com/github/rize-network/react-swagger-openapi
-[climate-image]: https://img.shields.io/codeclimate/maintainability/rize-network/react-swagger-openapi.svg
-[downloads-url]: http://npm-stat.com/charts.html?package=react-swagger-openapi
-[downloads-image]: http://img.shields.io/npm/dm/react-swagger-openapi.svg
-[build-url]: https://circleci.com/gh/rize-network/react-swagger-openapi/tree/master
-[build-image]: https://circleci.com/gh/rize-network/react-swagger-openapi/tree/master.svg?style=svg
+[license-image]: http://img.shields.io/npm/l/react-api.svg
+[coverage-url]: https://codecov.io/gh/rize-network/react-api
+[coverage-image]: https://img.shields.io/codecov/c/github/rize-network/react-api.svg
+[downloads-url]: http://npm-stat.com/charts.html?package=react-api
+[downloads-image]: http://img.shields.io/npm/dm/react-api.svg
