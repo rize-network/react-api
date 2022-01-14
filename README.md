@@ -1,12 +1,8 @@
-# React Swagger OpenAPI
+# React Api
 
 [![NPM][npm-image]][npm-url]
 [![License][license-image]][license-url]
-[![Coverage][coverage-image]][coverage-url]
-[![Quality][quality-image]][quality-url]
-[![Code Climate][climate-image]][climate-url]
 [![Downloads][downloads-image]][downloads-url]
-[![Build][build-image]][build-url]
 
 > Node.js library that generates Typescript clients based on the OpenAPI specification.
 
@@ -26,15 +22,15 @@
 ## Install
 
 ```
-npm install react-api --save-dev
+npm install @app-studio/react-api --save-dev
 ```
 
 ## Usage
 
 ```
-$ openapi --help
+$ react-api --help
 
-  Usage: openapi [options]
+  Usage: react-api [options]
 
   Options:
     -V, --version             output the version number
@@ -52,9 +48,9 @@ $ openapi --help
     -h, --help                display help for command
 
   Examples
-    $ openapi --input ./spec.json
-    $ openapi --input ./spec.json --output ./dist
-    $ openapi --input ./spec.json --output ./dist --client xhr
+    $ react-api --input ./spec.json
+    $ react-api --input ./spec.json --output ./dist
+    $ react-api --input ./spec.json --output ./dist --client xhr
 ```
 
 ## Example
@@ -64,7 +60,7 @@ $ openapi --help
 ```json
 {
     "scripts": {
-        "generate": "openapi --input ./spec.json --output ./dist"
+        "generate": "react-api --input ./spec.json --output ./dist"
     }
 }
 ```
@@ -72,13 +68,13 @@ $ openapi --help
 **NPX**
 
 ```
-npx react-api --input ./spec.json --output ./dist
+npx @app-studio/react-api --input ./spec.json --output ./dist
 ```
 
 **Node.js API**
 
 ```javascript
-const OpenAPI = require('react-api');
+const OpenAPI = require('@app-studio/react-api');
 
 OpenAPI.generate({
     input: './spec.json',
@@ -366,7 +362,7 @@ enum EnumWithStrings {
 
 In the OpenAPI v3 spec you can create properties that can be NULL, by providing a `nullable: true` in your schema.
 However, the v2 spec does not allow you to do this. You can use the unofficial `x-nullable` in your specification
-to generate nullable properties in OpenApi v2.
+to generate nullable properties in OpenAPI v2.
 
 ```json
 {
@@ -430,7 +426,7 @@ Local references to schema definitions (those beginning with `#/definitions/sche
 will be converted to type references to the equivalent, generated top-level type.
 
 The OpenAPI generator also supports external references, which allows you to break
-down your openapi.yml into multiple sub-files, or incorporate third-party schemas
+down your OpenAPI.yml into multiple sub-files, or incorporate third-party schemas
 as part of your types to ensure everything is able to be TypeScript generated.
 
 External references may be:
@@ -445,7 +441,7 @@ External references may be:
 
 External references may also contain internal paths in the external schema (e.g.
 `schemas/collection.yml#/definitions/schemas/Customer`) and back-references to
-the base openapi file or between files (so that you can reference another
+the base OpenAPI file or between files (so that you can reference another
 schema in the main file as a type of an object or array property, for example).
 
 At start-up, an OpenAPI or Swagger file with external references will be "bundled",
@@ -481,9 +477,9 @@ module.exports = {
 
 This tool allows you to generate a client based on the [`axios`](https://www.npmjs.com/package/axios) client.
 The advantage of the Axios client is that it works in both NodeJS and Browser based environments.
-If you want to generate the Axios based client then you can specify `--client axios` in the openapi call:
+If you want to generate the Axios based client then you can specify `--client axios` in the react-api call:
 
-`openapi --input ./spec.json --output ./dist --client axios`
+`react-api --input ./spec.json --output ./dist --client axios`
 
 The only downside is that this client needs some additional dependencies to work (due to the missing Blob and FormData
 classes in NodeJS).
@@ -500,9 +496,9 @@ in your `tsconfig.json` file.
 
 By default, this tool will generate a client that is compatible with the (browser based) Fetch API.
 However, this client will not work inside the Node.js environment. If you want to generate the Node.js compatible
-client then you can specify `--client node` in the openapi call:
+client then you can specify `--client node` in the OpenAPI call:
 
-`openapi --input ./spec.json --output ./dist --client node`
+`react-api --input ./spec.json --output ./dist --client node`
 
 This will generate a client that uses [`node-fetch`](https://www.npmjs.com/package/node-fetch) internally. However,
 in order to compile and run this client, you might need to install the `node-fetch@2.x` dependencies.
@@ -520,11 +516,9 @@ npm install node-fetch@2.x --save-dev
 In order to compile the project and resolve the imports, you will need to enable the `allowSyntheticDefaultImports`
 in your `tsconfig.json` file.
 
-[npm-url]: https://npmjs.org/package/react-api
-[npm-image]: https://img.shields.io/npm/v/react-api.svg
+[npm-url]: https://npmjs.org/package/@app-studio/react-api
+[npm-image]: https://img.shields.io/npm/v/@app-studio/react-api.svg
 [license-url]: LICENSE
-[license-image]: http://img.shields.io/npm/l/react-api.svg
-[coverage-url]: https://codecov.io/gh/rize-network/react-api
-[coverage-image]: https://img.shields.io/codecov/c/github/rize-network/react-api.svg
-[downloads-url]: http://npm-stat.com/charts.html?package=react-api
-[downloads-image]: http://img.shields.io/npm/dm/react-api.svg
+[license-image]: http://img.shields.io/npm/l/@app-studio/react-api.svg
+[downloads-url]: http://npm-stat.com/charts.html?package=@app-studio/react-api
+[downloads-image]: http://img.shields.io/npm/dm/@app-studio/react-api.svg
