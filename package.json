@@ -59,6 +59,9 @@
         "prepublishOnly": "npm run clean && npm run release",
         "codecov": "codecov --token=66c30c23-8954-4892-bef9-fbaed0a2e42b"
     },
+    "peerDependencies": {
+        "@app-studio/react-request": ">= 0.0.4"
+    },
     "dependencies": {
         "@types/node-fetch": "^2.5.12",
         "abort-controller": "^3.0.0",
@@ -68,10 +71,11 @@
         "form-data": "^4.0.0",
         "handlebars": "^4.7.6",
         "json-schema-ref-parser": "^9.0.7",
-        "prettier": "2.4.0",
-        "node-fetch": "^2.6.6"
+        "node-fetch": "^2.6.6",
+        "prettier": "2.4.0"
     },
     "devDependencies": {
+        "@app-studio/react-request": "^0.0.5",
         "@babel/cli": "7.16.7",
         "@babel/core": "7.16.7",
         "@babel/preset-env": "7.16.7",

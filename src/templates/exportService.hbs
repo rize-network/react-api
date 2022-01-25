@@ -6,7 +6,8 @@ import type { {{{this}}} } from '../models/{{{this}}}';
 {{/each}}
 {{/if}}
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { request as __request, useRequest,UseRequestOption } from '../core/request';
+import { request as __request } from '../core/request';
+import { useRequest,UseRequestOption } from '@app-studio/react-request';
 
 {{#if @root.useVersion}}
 import { OpenAPI } from '../core/OpenAPI';
