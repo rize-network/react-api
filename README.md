@@ -23,6 +23,7 @@
 
 ```
 npm install @app-studio/react-api --save-dev
+npm install @app-studio/react-request --save
 ```
 
 ## Usage
