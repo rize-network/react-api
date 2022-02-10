@@ -19,6 +19,10 @@ async function sendRequest(
         request.credentials = OpenAPI.CREDENTIALS;
     }
 
+    if (OpenAPI.CORS) {
+        request.mode = OpenAPI.CORS;
+    }
+
     onCancel(() => controller.abort());
 
     return await fetch(url, request);
