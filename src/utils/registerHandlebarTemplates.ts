@@ -132,6 +132,7 @@ export function registerHandlebarTemplates(root: {
     Handlebars.registerPartial('isReadOnly', Handlebars.template(partialIsReadOnly));
     Handlebars.registerPartial('isRequired', Handlebars.template(partialIsRequired));
     Handlebars.registerPartial('parameters', Handlebars.template(partialParameters));
+    Handlebars.registerPartial('params', Handlebars.template(partialParameters));
     Handlebars.registerPartial('result', Handlebars.template(partialResult));
     Handlebars.registerPartial('schema', Handlebars.template(partialSchema));
     Handlebars.registerPartial('schemaArray', Handlebars.template(partialSchemaArray));
