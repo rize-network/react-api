@@ -7,6 +7,7 @@ type Headers = Record<string, string>;
 
 type Config = {
     BASE: string;
+    CORS?: 'no-cors' | 'cors';
     VERSION: string;
     WITH_CREDENTIALS: boolean;
     CREDENTIALS: 'include' | 'omit' | 'same-origin';
