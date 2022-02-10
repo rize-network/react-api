@@ -39,11 +39,7 @@ export function getOperation(
         method: method.toUpperCase(),
         path: operationPath,
         parameters: [...pathParams.parameters],
-        params: [
-            ...pathParams.parameters.map(value => {
-                return { ...value, default: undefined };
-            }),
-        ],
+        params: [...pathParams.parameters],
         parametersPath: [...pathParams.parametersPath],
         parametersQuery: [...pathParams.parametersQuery],
         parametersForm: [...pathParams.parametersForm],
