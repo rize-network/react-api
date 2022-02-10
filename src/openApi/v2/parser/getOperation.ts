@@ -6,6 +6,8 @@ import { getComment } from './getComment';
 import { getOperationErrors } from './getOperationErrors';
 import { getOperationName } from './getOperationName';
 import { getOperationParameters } from './getOperationParameters';
+import type { OpenApiParameter } from '../interfaces/OpenApiParameter';
+
 import { getOperationPath } from './getOperationPath';
 import { getOperationResponseHeader } from './getOperationResponseHeader';
 import { getOperationResponses } from './getOperationResponses';
@@ -37,6 +39,11 @@ export function getOperation(
         method: method.toUpperCase(),
         path: operationPath,
         parameters: [...pathParams.parameters],
+        params: [
+            ...pathParams.parameters.map(value => {
+                return { ...value, default: undefined };
+            }),
+        ],
         parametersPath: [...pathParams.parametersPath],
         parametersQuery: [...pathParams.parametersQuery],
         parametersForm: [...pathParams.parametersForm],

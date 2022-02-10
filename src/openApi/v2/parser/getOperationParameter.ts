@@ -110,6 +110,9 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
         if (schema.$ref?.startsWith('#/parameters/')) {
             schema = getRef<OpenApiSchema>(openApi, schema);
         }
+        if (schema.$ref?.startsWith('#/params/')) {
+            schema = getRef<OpenApiSchema>(openApi, schema);
+        }
         if (schema.$ref) {
             const model = getType(schema.$ref);
             operationParameter.export = 'reference';

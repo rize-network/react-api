@@ -7,6 +7,7 @@ export function stripNamespace(value: string): string {
         .trim()
         .replace(/^#\/definitions\//, '')
         .replace(/^#\/parameters\//, '')
+        .replace(/^#\/params\//, '')
         .replace(/^#\/responses\//, '')
         .replace(/^#\/securityDefinitions\//, '');
 }
