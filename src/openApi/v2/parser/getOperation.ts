@@ -39,7 +39,10 @@ export function getOperation(
         method: method.toUpperCase(),
         path: operationPath,
         parameters: [...pathParams.parameters],
-        params: [...pathParams.parameters],
+        params: [
+            ...pathParams.parameters.filter(a => a.isRequired),
+            ...pathParams.parameters.filter(a => !a.isRequired),
+        ],
         parametersPath: [...pathParams.parametersPath],
         parametersQuery: [...pathParams.parametersQuery],
         parametersForm: [...pathParams.parametersForm],
