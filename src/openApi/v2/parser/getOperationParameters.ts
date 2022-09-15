@@ -8,6 +8,7 @@ export function getOperationParameters(openApi: OpenApi, parameters: OpenApiPara
     const operationParameters: OperationParameters = {
         imports: [],
         parameters: [],
+        params: [],
         parametersPath: [],
         parametersQuery: [],
         parametersForm: [],
