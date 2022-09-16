@@ -6,7 +6,7 @@ export type ApiRequestOptions = {
     readonly method: ApiRequestHttpMethod;
     readonly path: string;
     readonly cookies?: Record<string, any>;
-    readonly headers?: Record<string, any>;
+    readonly headers?: Record<string, string>;
     readonly query?: Record<string, any>;
     readonly formData?: Record<string, any>;
     readonly body?: any;

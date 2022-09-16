@@ -1,6 +1,6 @@
 {
     "name": "@app-studio/react-api",
-    "version": "0.15.4",
+    "version": "0.15.5",
     "description": "Library that generates React Hooks based on the OpenAPI specification.",
     "author": "Steed Monteiro",
     "homepage": "https://github.com/rize-network/react-api",
