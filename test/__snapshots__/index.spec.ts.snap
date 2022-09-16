@@ -405,7 +405,7 @@ async function sendRequest(
 
 function getResponseHeader(response: Response, responseHeader?: string): string | undefined {
     if (responseHeader) {
-        const content = response.headers[responseHeader];
+        const content = response.headers.get(responseHeader);
         if (isString(content)) {
             return content;
         }
@@ -416,7 +416,7 @@ function getResponseHeader(response: Response, responseHeader?: string): string 
 async function getResponseBody(response: Response): Promise<any> {
     if (response.status !== 204) {
         try {
-            const contentType = response.headers['Content-Type'];
+            const contentType = response.headers.get('Content-Type');
             if (contentType) {
                 const isJSON = contentType.toLowerCase().startsWith('application/json');
                 if (isJSON) {
@@ -3114,7 +3114,7 @@ async function sendRequest(
 
 function getResponseHeader(response: Response, responseHeader?: string): string | undefined {
     if (responseHeader) {
-        const content = response.headers[responseHeader];
+        const content = response.headers.get(responseHeader);
         if (isString(content)) {
             return content;
         }
@@ -3125,7 +3125,7 @@ function getResponseHeader(response: Response, responseHeader?: string): string 
 async function getResponseBody(response: Response): Promise<any> {
     if (response.status !== 204) {
         try {
-            const contentType = response.headers['Content-Type'];
+            const contentType = response.headers.get('Content-Type');
             if (contentType) {
                 const isJSON = contentType.toLowerCase().startsWith('application/json');
                 if (isJSON) {

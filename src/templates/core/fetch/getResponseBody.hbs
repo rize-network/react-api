@@ -1,7 +1,7 @@
 async function getResponseBody(response: Response): Promise<any> {
     if (response.status !== 204) {
         try {
-            const contentType = response.headers['Content-Type'];
+            const contentType = response.headers.get('Content-Type');
             if (contentType) {
                 const isJSON = contentType.toLowerCase().startsWith('application/json');
                 if (isJSON) {

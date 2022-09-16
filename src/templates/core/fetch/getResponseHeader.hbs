@@ -1,6 +1,6 @@
 function getResponseHeader(response: Response, responseHeader?: string): string | undefined {
     if (responseHeader) {
-        const content = response.headers[responseHeader];
+        const content = response.headers.get(responseHeader);
         if (isString(content)) {
             return content;
         }
