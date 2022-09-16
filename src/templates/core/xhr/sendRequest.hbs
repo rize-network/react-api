@@ -3,7 +3,7 @@ async function sendRequest(
     url: string,
     formData: FormData | undefined,
     body: any,
-    headers: Record<string, string>,
+    headers: Record<string, any>,
     onCancel: OnCancel
 ): Promise<XMLHttpRequest> {
     const xhr = new XMLHttpRequest();

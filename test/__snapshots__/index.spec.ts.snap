@@ -179,7 +179,7 @@ exports[`v2 should generate: ./test/generated/v2/core/OpenAPI.ts 1`] = `
 import type { ApiRequestOptions } from './ApiRequestOptions';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
-type Headers = Record<string, string>;
+type Headers = Record<string, any>;
 
 type Config = {
     BASE: string;
@@ -328,7 +328,7 @@ async function resolve<T>(options: ApiRequestOptions, resolver?: T | Resolver<T>
 
 async function getHeaders(
   options: ApiRequestOptions,
-): Promise<Record<string, string>> {
+): Promise<Record<string, any>> {
   const token = await resolve(options, OpenAPI.TOKEN);
   const username = await resolve(options, OpenAPI.USERNAME);
   const password = await resolve(options, OpenAPI.PASSWORD);
@@ -382,7 +382,7 @@ async function sendRequest(
     url: string,
     formData: FormData | undefined,
     body: BodyInit | undefined,
-    headers: Record<string, string>,
+    headers: Record<string, any>,
     onCancel: OnCancel
 ): Promise<Response> {
     const controller = new AbortController();
@@ -708,7 +708,7 @@ exports[`v2 should generate: ./test/generated/v2/models/DictionaryWithDictionary
 /**
  * This is a string dictionary
  */
-export type DictionaryWithDictionary = Record<string, Record<string, string>>;"
+export type DictionaryWithDictionary = Record<string, Record<string, any>>;"
 `;
 
 exports[`v2 should generate: ./test/generated/v2/models/DictionaryWithProperties.ts 1`] = `
@@ -746,7 +746,7 @@ exports[`v2 should generate: ./test/generated/v2/models/DictionaryWithString.ts 
 /**
  * This is a string dictionary
  */
-export type DictionaryWithString = Record<string, string>;"
+export type DictionaryWithString = Record<string, any>;"
 `;
 
 exports[`v2 should generate: ./test/generated/v2/models/EnumFromDescription.ts 1`] = `
@@ -919,7 +919,7 @@ exports[`v2 should generate: ./test/generated/v2/models/ModelWithDictionary.ts 1
  * This is a model with one property containing a dictionary
  */
 export type ModelWithDictionary = {
-    prop?: Record<string, string>;
+    prop?: Record<string, any>;
 }
 "
 `;
@@ -2683,7 +2683,7 @@ export class TypesService {
      */
     public static types(
         parameterArray: Array<string>,
-        parameterDictionary: Record<string, string>,
+        parameterDictionary: Record<string, any>,
         parameterEnum: 'Success' | 'Warning' | 'Error',
         parameterNumber: number = 123,
         parameterString: string = 'default',
@@ -2888,7 +2888,7 @@ exports[`v3 should generate: ./test/generated/v3/core/OpenAPI.ts 1`] = `
 import type { ApiRequestOptions } from './ApiRequestOptions';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
-type Headers = Record<string, string>;
+type Headers = Record<string, any>;
 
 type Config = {
     BASE: string;
@@ -3037,7 +3037,7 @@ async function resolve<T>(options: ApiRequestOptions, resolver?: T | Resolver<T>
 
 async function getHeaders(
   options: ApiRequestOptions,
-): Promise<Record<string, string>> {
+): Promise<Record<string, any>> {
   const token = await resolve(options, OpenAPI.TOKEN);
   const username = await resolve(options, OpenAPI.USERNAME);
   const password = await resolve(options, OpenAPI.PASSWORD);
@@ -3091,7 +3091,7 @@ async function sendRequest(
     url: string,
     formData: FormData | undefined,
     body: BodyInit | undefined,
-    headers: Record<string, string>,
+    headers: Record<string, any>,
     onCancel: OnCancel
 ): Promise<Response> {
     const controller = new AbortController();
@@ -3612,7 +3612,7 @@ exports[`v3 should generate: ./test/generated/v3/models/DictionaryWithDictionary
 /**
  * This is a string dictionary
  */
-export type DictionaryWithDictionary = Record<string, Record<string, string>>;"
+export type DictionaryWithDictionary = Record<string, Record<string, any>>;"
 `;
 
 exports[`v3 should generate: ./test/generated/v3/models/DictionaryWithProperties.ts 1`] = `
@@ -3650,7 +3650,7 @@ exports[`v3 should generate: ./test/generated/v3/models/DictionaryWithString.ts 
 /**
  * This is a string dictionary
  */
-export type DictionaryWithString = Record<string, string>;"
+export type DictionaryWithString = Record<string, any>;"
 `;
 
 exports[`v3 should generate: ./test/generated/v3/models/EnumFromDescription.ts 1`] = `
@@ -3868,7 +3868,7 @@ exports[`v3 should generate: ./test/generated/v3/models/ModelWithDictionary.ts 1
  * This is a model with one property containing a dictionary
  */
 export type ModelWithDictionary = {
-    prop?: Record<string, string>;
+    prop?: Record<string, any>;
 }
 "
 `;
