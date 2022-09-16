@@ -3,7 +3,7 @@ async function sendRequest(
     url: string,
     formData: FormData | undefined,
     body: BodyInit | undefined,
-    headers: Headers,
+    headers: Record<string, string>,
     onCancel: OnCancel
 ): Promise<Response> {
     const controller = new AbortController();
