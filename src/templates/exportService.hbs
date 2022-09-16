@@ -99,7 +99,7 @@ import { OpenAPI } from '../core/OpenAPI';
 
 {{#each operations}}
  
-export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', ...options}:UseRequestOption) : {
+export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', ...options}:UseRequestOption = {}) : {
     run: ({{>params}}) => void;
     data: {{>result}};
     loading: boolean;
