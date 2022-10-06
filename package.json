@@ -1,6 +1,6 @@
 {
     "name": "@app-studio/react-api",
-    "version": "0.15.8",
+    "version": "0.15.9",
     "description": "Library that generates React Hooks based on the OpenAPI specification.",
     "author": "Steed Monteiro",
     "homepage": "https://github.com/rize-network/react-api",
@@ -72,7 +72,7 @@
         "prettier": "2.4.0"
     },
     "devDependencies": {
-        "@app-studio/react-request": "^0.0.8",
+        "@app-studio/react-request": "^0.0.37",
         "@babel/cli": "7.16.7",
         "@babel/core": "7.16.7",
         "@babel/preset-env": "7.16.7",

@@ -7,7 +7,7 @@ import type { {{{this}}} } from '../models/{{{this}}}';
 {{/if}}
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
-import { useRequest,UseRequestOption } from '@app-studio/react-request';
+import { useRequest, UseRequestOption, UseRequestProperties  } from '@app-studio/react-request';
 import type { ApiRequestHttpMethod } from '../core/ApiRequestOptions';
 
 {{#if @root.useVersion}}
@@ -102,11 +102,7 @@ import { OpenAPI } from '../core/OpenAPI';
 export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', ...options}:UseRequestOption = {}) : {
     run: ({{>params}}) => void;
     data: {{>result}};
-    loading: boolean;
-    error?: Error;
-    params?: any;
-    method?: ApiRequestHttpMethod;
-}=> {
+} & UseRequestProperties => {
     
     return useRequest({{{name}}},{ method, ...options});
 }
