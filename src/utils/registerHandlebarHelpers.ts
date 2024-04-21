@@ -79,4 +79,16 @@ export function registerHandlebarHelpers(root: {
             );
         }
     );
+
+    Handlebars.registerHelper(
+        'contains',
+        function (this: any, value: string, substring: string, options: Handlebars.HelperOptions): string {
+            // Check if the string value contains the specified substring
+            if (value.toLowerCase().indexOf(substring.toLowerCase()) !== -1) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        }
+    );
 }

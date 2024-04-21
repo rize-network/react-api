@@ -17,5 +17,6 @@ describe('registerHandlebarHelpers', () => {
         expect(helpers).toContain('union');
         expect(helpers).toContain('intersection');
         expect(helpers).toContain('enumerator');
+        expect(helpers).toContain('contains');
     });
 });

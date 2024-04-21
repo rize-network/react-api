@@ -6,13 +6,12 @@ import type { {{{this}}} } from '../models/{{{this}}}';
 {{/each}}
 {{/if}}
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { request as __request } from '../core/request';
-import { useRequest, UseRequestOption, UseRequestProperties  } from '@app-studio/react-request';
+import { request as __request, upload } from '../core/request';
+import { useRequest, UseRequestOption, UseRequestProperties } from '@app-studio/react-request';
 
 {{#if @root.useVersion}}
 import { OpenAPI } from '../core/OpenAPI';
 {{/if}}
-
 
     {{#each operations}}
     /**
@@ -38,7 +37,9 @@ import { OpenAPI } from '../core/OpenAPI';
      * @throws ApiError
      */
   export const {{{name}}} = ({{>parameters}}): CancelablePromise<{{>result}}> => {
-        return __request({
+
+    
+        return {{#contains name 'Upload'}}upload{{else}}__request{{/contains}}({
             method: '{{{method}}}',
             path: `{{{path}}}`,
             {{#if parametersCookie}}
@@ -102,7 +103,6 @@ export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', ...
     run: ({{>params}}) => void;
     data: {{>result}};
 } & UseRequestProperties => {
-    
     return useRequest({{{name}}},{ method, ...options});
 }
 

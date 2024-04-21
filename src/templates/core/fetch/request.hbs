@@ -91,3 +91,73 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
         }
     });
 }
+
+
+/**
+ * Upload using fetch client
+ * @param options The request options from the the service
+ * @returns CancelablePromise<T>
+ * @throws ApiError
+ */
+export function upload<T>(options: ApiRequestOptions): CancelablePromise<T> {
+  return new CancelablePromise(async (resolve, reject, onCancel) => {
+    try {
+      let xhr = new XMLHttpRequest();
+      const url = getUrl(options);
+      const formData = getFormData(options);
+      const headers = await getHeaders(options);
+
+      if (!onCancel.isCancelled) {
+        xhr.upload.addEventListener('progress', (e) => {
+          const progress = Math.round((e.loaded * 100.0) / e.total);
+
+          if (options.onProgress) {
+            options.onProgress(progress);
+          }
+
+          console.log(`fileuploadprogress data.loaded: ${e.loaded}, data.total: ${e.total}`);
+        });
+
+        xhr.onreadystatechange = function onreadystatechange() {
+          if (xhr.readyState === 4) {
+            console.log('readyState', xhr.readyState);
+
+            let response;
+            try {
+              response = JSON.parse(xhr.responseText);
+              if (xhr.status >= 200 && xhr.status < 300) {
+                // File uploaded successfully
+                // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
+                // Create a thumbnail of the uploaded image, with 150px width
+
+                if (response.success) {
+                  resolve(response);
+                  catchErrors(options, response);
+                } else {
+                  reject(response);
+                }
+              } else {
+                reject(response);
+              }
+            } catch (e) {
+              reject(response);
+            }
+          }
+        };
+
+
+        xhr.open(options.method, url, true);
+
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        for (var i in headers) {
+          xhr.setRequestHeader(i, headers[i]);
+        }
+
+        xhr.send(formData);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
