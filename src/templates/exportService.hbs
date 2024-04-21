@@ -36,10 +36,11 @@ import { OpenAPI } from '../core/OpenAPI';
     {{/each}}
      * @throws ApiError
      */
-  export const {{{name}}} = ({{>parameters}}): CancelablePromise<{{>result}}> => {
+  export const {{{name}}} = ({{>parameters}}{{#contains name 'Upload'}}, onProgress {{/contains}}): CancelablePromise<{{>result}}> => {
 
     
         return {{#contains name 'Upload'}}upload{{else}}__request{{/contains}}({
+            {{#contains name 'Upload'}}onProgress,{{/contains}}
             method: '{{{method}}}',
             path: `{{{path}}}`,
             {{#if parametersCookie}}
