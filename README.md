@@ -26,6 +26,17 @@ npm install @app-studio/react-api --save-dev
 npm install @app-studio/react-request --save
 ```
 
+## Install
+
+Link it locally:
+```
+cd /Volumes/workspace/open-source/react-api
+npm run build
+
+cd /Volumes/workspace/open-source/react-api
+npm link
+```
+
 ## Usage
 
 ```

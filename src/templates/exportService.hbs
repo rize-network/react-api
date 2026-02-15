@@ -5,6 +5,7 @@
 import type { {{{this}}} } from '../models/{{{this}}}';
 {{/each}}
 {{/if}}
+import { useCallback, useRef } from 'react';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request, upload } from '../core/request';
 import { useRequest, UseRequestOption, UseRequestProperties } from '@app-studio/react-request';
@@ -99,12 +100,30 @@ import { OpenAPI } from '../core/OpenAPI';
 
 
 {{#each operations}}
- 
+
+{{#contains name 'Upload'}}
+export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', onProgress, ...options}:UseRequestOption & { onProgress?: (progress: number) => void } = {}) : {
+    run: ({{>params}}) => void;
+    data: {{>result}};
+} & UseRequestProperties => {
+    // Use ref to store onProgress to avoid recreating wrapper on every render
+    const onProgressRef = useRef(onProgress);
+    onProgressRef.current = onProgress;
+
+    // Memoized wrapper to pass onProgress callback to upload function
+    const uploadWithProgress = useCallback(({{>params}}) => {
+        return {{{name}}}({{>paramNames}}, onProgressRef.current);
+    }, []);
+
+    return useRequest(uploadWithProgress, { method, ...options });
+}
+{{else}}
 export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', ...options}:UseRequestOption = {}) : {
     run: ({{>params}}) => void;
     data: {{>result}};
 } & UseRequestProperties => {
     return useRequest({{{name}}},{ method, ...options});
 }
+{{/contains}}
 
 {{/each}}
