@@ -174,6 +174,87 @@ const Component = () => {
 }
 ```
 
+### Upload
+
+When an OpenAPI operation name contains "Upload", the generator produces a hook with built-in progress tracking. The upload function uses `XMLHttpRequest` internally to support progress events, while the hook wraps it with `useRequest` for consistent state management.
+
+```typescript
+import { FileService } from './api';
+
+const Component = () => {
+    const uploadRequest = FileService.useUploadFileService({
+        onProgress: (progress) => {
+            console.log(`Upload: ${progress}%`);
+        },
+        onSuccess: (data) => {
+            console.log('Upload complete', data);
+        },
+        onError: (error) => {
+            console.error('Upload failed', error);
+        },
+    });
+
+    return (
+        <>
+            <input
+                type="file"
+                onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                        const formData = new FormData();
+                        formData.append('file', file);
+                        uploadRequest.run(formData);
+                    }
+                }}
+            />
+            {uploadRequest.loading && <p>Uploading... {progress}%</p>}
+            {uploadRequest.error && <p>{uploadRequest.error.message}</p>}
+            {uploadRequest.data && <p>Uploaded!</p>}
+        </>
+    );
+};
+```
+
+### Download
+
+When an OpenAPI operation name contains "Download", the generator produces a hook with built-in progress tracking. The download function uses `fetch` internally for blob handling (since the standard `request` function only supports JSON responses), while reading `OpenAPI.BASE` and `OpenAPI.TOKEN` for auth consistency. The hook wraps it with `useRequest` like all other generated hooks.
+
+```typescript
+import { FileService } from './api';
+
+const Component = () => {
+    const downloadRequest = FileService.useDownloadFileService({
+        onProgress: (progress) => {
+            console.log(`Download: ${progress}%`);
+        },
+        onSuccess: (blob) => {
+            // Create a download link from the blob
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'file.pdf';
+            a.click();
+            URL.revokeObjectURL(url);
+        },
+        onError: (error) => {
+            console.error('Download failed', error);
+        },
+    });
+
+    return (
+        <>
+            <button onClick={() => downloadRequest.run(fileId)}>
+                Download
+            </button>
+            {downloadRequest.loading && <p>Downloading... {progress}%</p>}
+            {downloadRequest.error && <p>{downloadRequest.error.message}</p>}
+        </>
+    );
+};
+```
+
+> **Note:** Download progress tracking requires the server to send a `Content-Length` header in the response. Without it, the download will still work but progress will not be reported.
+
 ### Enums vs. Union Types `--useUnionTypes`
 
 The OpenAPI spec allows you to define [enums](https://swagger.io/docs/specification/data-models/enums/) inside the

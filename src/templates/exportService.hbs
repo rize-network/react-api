@@ -7,7 +7,7 @@ import type { {{{this}}} } from '../models/{{{this}}}';
 {{/if}}
 import { useCallback, useRef } from 'react';
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { request as __request, upload } from '../core/request';
+import { request as __request, upload, download } from '../core/request';
 import { useRequest, UseRequestOption, UseRequestProperties } from '@app-studio/react-request';
 
 {{#if @root.useVersion}}
@@ -37,11 +37,12 @@ import { OpenAPI } from '../core/OpenAPI';
     {{/each}}
      * @throws ApiError
      */
-  export const {{{name}}} = ({{>parameters}}{{#contains name 'Upload'}} onProgress {{/contains}}): CancelablePromise<{{>result}}> => {
+  export const {{{name}}} = ({{>parameters}}{{#contains name 'Upload'}} onProgress {{/contains}}{{#contains name 'Download'}} onProgress {{/contains}}): CancelablePromise<{{>result}}> => {
 
-    
-        return {{#contains name 'Upload'}}upload{{else}}__request{{/contains}}({
+
+        return {{#contains name 'Upload'}}upload{{else}}{{#contains name 'Download'}}download{{else}}__request{{/contains}}{{/contains}}({
             {{#contains name 'Upload'}}onProgress,{{/contains}}
+            {{#contains name 'Download'}}onProgress,{{/contains}}
             method: '{{{method}}}',
             path: `{{{path}}}`,
             {{#if parametersCookie}}
@@ -118,12 +119,30 @@ export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', onP
     return useRequest(uploadWithProgress, { method, ...options });
 }
 {{else}}
+{{#contains name 'Download'}}
+export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', onProgress, ...options}:UseRequestOption & { onProgress?: (progress: number) => void } = {}) : {
+    run: ({{>params}}) => void;
+    data: {{>result}};
+} & UseRequestProperties => {
+    // Use ref to store onProgress to avoid recreating wrapper on every render
+    const onProgressRef = useRef(onProgress);
+    onProgressRef.current = onProgress;
+
+    // Memoized wrapper to pass onProgress callback to download function
+    const downloadWithProgress = useCallback(({{>params}}) => {
+        return {{{name}}}({{>paramNames}}, onProgressRef.current);
+    }, []);
+
+    return useRequest(downloadWithProgress, { method, ...options });
+}
+{{else}}
 export const {{{hookName}}}{{{@root.postfix}}} = ({method =  '{{{method}}}', ...options}:UseRequestOption = {}) : {
     run: ({{>params}}) => void;
     data: {{>result}};
 } & UseRequestProperties => {
     return useRequest({{{name}}},{ method, ...options});
 }
+{{/contains}}
 {{/contains}}
 
 {{/each}}

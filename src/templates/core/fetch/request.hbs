@@ -161,3 +161,64 @@ export function upload<T>(options: ApiRequestOptions): CancelablePromise<T> {
     }
   });
 }
+
+
+/**
+ * Download using fetch client
+ * @param options The request options from the service
+ * @returns CancelablePromise<Blob>
+ * @throws ApiError
+ */
+export function download<T>(options: ApiRequestOptions): CancelablePromise<T> {
+  return new CancelablePromise(async (resolve, reject, onCancel) => {
+    try {
+      const url = getUrl(options);
+      const headers = await getHeaders(options);
+
+      if (!onCancel.isCancelled) {
+        const response = await fetch(url, {
+          method: options.method,
+          headers,
+          credentials: OpenAPI.CREDENTIALS,
+        });
+
+        if (!response.ok) {
+          reject(new ApiError(options, {
+            url,
+            ok: response.ok,
+            status: response.status,
+            statusText: response.statusText,
+            body: await response.text(),
+          }, `Download failed: ${response.statusText}`));
+          return;
+        }
+
+        const contentLength = response.headers.get('Content-Length');
+        const total = contentLength ? parseInt(contentLength, 10) : 0;
+
+        if (options.onProgress && response.body && total) {
+          const reader = response.body.getReader();
+          const chunks: Uint8Array[] = [];
+          let loaded = 0;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            loaded += value.length;
+            const progress = Math.round((loaded * 100.0) / total);
+            options.onProgress(progress);
+          }
+
+          const blob = new Blob(chunks);
+          resolve(blob as any);
+        } else {
+          const blob = await response.blob();
+          resolve(blob as any);
+        }
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
